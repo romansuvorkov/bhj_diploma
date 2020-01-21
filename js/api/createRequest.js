@@ -2,11 +2,11 @@
  * Основная функция для совершения запросов
  * на сервер.
  * */
-const createRequest = (options = {}, callback) => {
+function createRequest(options = {}, callback) {
 
   let xhr = new XMLHttpRequest;
   xhr.withCredentials = true;
-  xhr.responseType = options.responseType;
+  xhr.responseType = 'json';
   let requestMethod = options.method;
   let response;
 	let address;
