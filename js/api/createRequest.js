@@ -6,14 +6,24 @@ const createRequest = (options = {}, callback) => {
 
   let xhr = new XMLHttpRequest;
   xhr.withCredentials = true;
-	let requestMethod = options.method;
+  xhr.responseType = options.responseType;
+  let requestMethod = options.method;
+  let response;
 	let address;
-	let formData;
+  let formData;
+  let dataInRequest;
+  let dataInURL;
+  
+  if (options.headers !== undefined) {
+    for (let item in options.headers) {
+        xhr.setRequestHeader(item, options.headers[item]);
+    } 
+  }
  
   if (requestMethod === 'GET') {
     if (options.data) {
-      let dataInRequest = options.data;
-      let dataInURL = '?';
+      dataInRequest = options.data;
+      dataInURL = '?';
       for (let item in dataInRequest) {
         if (dataInURL == '?') {
           dataInURL = `${dataInURL}${item}=${dataInRequest[item]}` 
@@ -38,12 +48,12 @@ const createRequest = (options = {}, callback) => {
   xhr.send(formData);
 
   if (xhr.readyState === xhr.DONE && xhr.status === 200) {
-    let response = xhr.response;
+    response = xhr.response;
     let err = null;
     callback(err, response);
   } else {
     console.log(`В ходе выполнения запроса к серверу произошла ошибка`);
-    let response = xhr.response;
+    response = xhr.response;
     err = xhr.status;
     callback(err, response);
   }
