@@ -7,7 +7,7 @@ class Entity {
 
   constructor() {
     this.URL = '';
-    this.HOST = 'https://bhj-diplom.letsdocode.ru';
+    this.HOST = 'https://bhj-diplom.letsdocode.ru/';
   }
 
   /**
@@ -16,7 +16,15 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static list( data, callback = f => f ) {
-    
+    let options = {
+      data: data,
+      url: `${this.HOST}${this.URL}`,
+      responseType: 'json',
+      method: 'GET',
+      callback
+    }
+    console.log(options.HOST)
+    return createRequest(options);
   }
 
   /**
@@ -26,13 +34,37 @@ class Entity {
    * */
   static create( data, callback = f => f ) {
 
+    Object.assign(data, {_method: 'PUT'});
+
+    let options = {
+      data,
+      url: `${this.HOST}${this.URL}`,
+      responseType: 'json',
+      method: 'POST',
+      callback
+    };
+
+    return createRequest(options);
+
   }
 
   /**
    * Получает информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static get( id = '', data, callback = f => f ) {
+  static get( id = '', data, callback = f => f ) {  
+
+    Object.assign(data, {id: id });
+
+    let options = {
+      data,
+      url: `${this.HOST}${this.URL}`,
+      responseType: 'json',
+      method: 'GET',
+      callback
+    };
+
+    return createRequest(options);
 
   }
 
@@ -42,6 +74,27 @@ class Entity {
    * */
   static remove( id = '', data, callback = f => f ) {
 
+    Object.assign(data, {id: id });
+    Object.assign(data, {_method: 'DELETE'});
+    let options = {
+      data,
+      url: `${this.HOST}${this.URL}`,
+      responseType: 'json',
+      method: 'POST',
+      callback
+    };
+
+    return createRequest(options);
+
   }
 }
 
+    // let x = {
+    //   d: 1
+    // }
+    
+    // let y = 'sdf';
+    
+    // Object.assign(x, {t: 2});
+    // Object.assign(x, {y: y});
+    // console.log(x);
