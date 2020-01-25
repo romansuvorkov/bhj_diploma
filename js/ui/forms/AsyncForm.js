@@ -42,11 +42,11 @@ class AsyncForm {
 
     let formData = new FormData(this.element);
 
-    entries = formData.entries();
+    let entries = formData.entries();
     let output = {};
     for (let item of entries) {
-        key = item[0];
-        value = item[1];
+        let key = item[0];
+        let value = item[1];
         output[key] = value;
     }
 
@@ -56,7 +56,7 @@ class AsyncForm {
   }
 
   onSubmit( options ) {
-
+    
   }
 
   /**
@@ -64,6 +64,11 @@ class AsyncForm {
    * данные, полученные из метода getData()
    * */
   submit() {
+    let output = {};
+    output.method = this.element.getAttribute('method');
+    output.url = this.element.getAttribute('action');
+    output.data = this.getData();
+    this.onSubmit(output);
 
   }
 

@@ -8,7 +8,10 @@ function createRequest(options) {
   xhr.withCredentials = true;
   xhr.responseType = options.responseType;
 	let address;
-  let formData = new FormData;
+  let formData = new FormData();
+  console.log(formData);
+  formData.append('1123', '1234');
+  console.log(formData);
 
   
   if (options.method === 'GET') {
@@ -29,7 +32,9 @@ function createRequest(options) {
   } else {
     address = options.url;
     for (let item in options.data) {
-      formData.append(item, options.data[item]);
+      console.log(item);
+      console.log(options.data[item]);
+      formData.append(JSON.stringify(item), JSON.stringify(options.data[item]));
       console.log(formData);
     }
   }
