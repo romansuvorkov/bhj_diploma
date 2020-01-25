@@ -13,7 +13,11 @@ class AsyncForm {
    * через registerEvents()
    * */
   constructor( element ) {
-
+    if (!element) {
+      throw new Error(`Передан пустой элемент`)
+    }
+    this.element = element;
+    this.registerEvents();
   }
 
   /**
@@ -21,7 +25,10 @@ class AsyncForm {
    * вызывает метод submit()
    * */
   registerEvents() {
-
+    this.element.addEventListener("submit", e => {
+      e.preventDefault();
+      this.submit();
+    });
   }
 
   /**
@@ -32,6 +39,19 @@ class AsyncForm {
    * }
    * */
   getData() {
+
+    let formData = new FormData(this.element);
+
+    entries = formData.entries();
+    let output = {};
+    for (let item of entries) {
+        key = item[0];
+        value = item[1];
+        output[key] = value;
+    }
+
+    return output;
+
 
   }
 
@@ -46,4 +66,31 @@ class AsyncForm {
   submit() {
 
   }
+
+//   <form action="http://netology.ru" id="myform" method="POST">
+//     <input type="hidden" name="hello" value="kitty">
+//     <input type="hidden" name="city" value="New York">
+//   </form>
+// class MyForm extends AsyncForm {
+//   onSubmit( options ) {
+//     console.log( options ); // выведет данные, которые передаст onsubmit
+//   }
+// }
+
+// const form = document.getElementById( 'myform' ),
+//   asyncForm = new MyForm( form );
+
+// asyncForm.submit();
+// /*
+//   Метод вызовет onSubmit, который выдаст такие данные
+//   {
+//     url: 'http://netology.ru',
+//     method: 'POST',
+//     data: {
+//       hello: 'kitty',
+//       city: 'New York'
+//     }
+//   }
+// */</input>
+
 }

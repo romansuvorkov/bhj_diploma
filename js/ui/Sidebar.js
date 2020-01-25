@@ -20,7 +20,6 @@ class Sidebar {
   static initToggleButton() {
     let sidebarBtn = Array.from(document.getElementsByClassName('sidebar-toggle'));
     let body = Array.from(document.getElementsByTagName('body'));
-    console.log(sidebarBtn);
     sidebarBtn.forEach(e => {
       e.addEventListener('click', function (){
         body[0].classList.toggle('sidebar-open');
@@ -38,6 +37,11 @@ class Sidebar {
    * */
   static initAuthLinks() {
 
+
+
+
+
+    
   }
 
 }

@@ -5,11 +5,6 @@
  * */
 class Entity {
 
-  constructor() {
-    this.URL = '';
-    this.HOST = 'https://bhj-diplom.letsdocode.ru/';
-  }
-
   /**
    * Запрашивает с сервера список данных.
    * Это могут быть счета или доходы/расходы
@@ -18,7 +13,7 @@ class Entity {
   static list( data, callback = f => f ) {
     let options = {
       data: data,
-      url: `${this.HOST}${this.URL}`,
+      url: this.HOST + this.URL,
       responseType: 'json',
       method: 'GET',
       callback
@@ -38,7 +33,7 @@ class Entity {
 
     let options = {
       data,
-      url: `${this.HOST}${this.URL}`,
+      url: this.HOST + this.URL,
       responseType: 'json',
       method: 'POST',
       callback
@@ -58,7 +53,7 @@ class Entity {
 
     let options = {
       data,
-      url: `${this.HOST}${this.URL}`,
+      url: this.HOST + this.URL,
       responseType: 'json',
       method: 'GET',
       callback
@@ -78,7 +73,7 @@ class Entity {
     Object.assign(data, {_method: 'DELETE'});
     let options = {
       data,
-      url: `${this.HOST}${this.URL}`,
+      url: this.HOST + this.URL,
       responseType: 'json',
       method: 'POST',
       callback
@@ -88,6 +83,9 @@ class Entity {
 
   }
 }
+
+Entity.URL = '';
+Entity.HOST = 'https://bhj-diplom.letsdocode.ru';
 
     // let x = {
     //   d: 1
