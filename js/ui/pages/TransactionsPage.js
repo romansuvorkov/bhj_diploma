@@ -74,11 +74,12 @@ class TransactionsPage {
           console.log('1111111111111111111111111');
           console.log(response);
           if (response && response.success) {
-              TransactionsPage.clear();   
+              this.clear();
+              App.update(); 
           } else {
             throw new Error(`Ошибка при удалении счета`);
           }
-          App.update();
+          
         });
       }
     }
