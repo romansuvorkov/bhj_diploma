@@ -42,13 +42,14 @@ const createRequest = options => {
   xhr.onload = function () {
     if (xhr.readyState === xhr.DONE && xhr.status === 200) {
       // console.log(`Запрос createRequest onload`);
-      // console.log(xhr);
+      console.log(xhr);
       try {
         options.callback(0, xhr.response);
       }
       catch (err) {
         options.callback(err, 0);
       }
+      // return xhr;
     }
   }
 
@@ -58,7 +59,7 @@ const createRequest = options => {
     xhr.send(formData);
   };
   // console.log(`Ответ в createRequest`);
-  // console.log(xhr);
+  console.log(xhr);
   return xhr;
 
 };

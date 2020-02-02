@@ -36,7 +36,7 @@ class TransactionsPage {
   registerEvents() {
     let transactionID;
     let btnRemove = this.element.querySelector('.remove-account');
-    console.log('btnRemove123123124124124124');
+    console.log('btnRemove');
     console.log(btnRemove);
 
     btnRemove.addEventListener('click', () => {
@@ -71,14 +71,14 @@ class TransactionsPage {
       if (confirm('Вы действительно хотите удалить счёт?')) {
         let accountID = this.lastOptions.account_id;
         Account.remove('id', accountID, (err, response) => {
-          console.log('1123123123414212341');
+          console.log('1111111111111111111111111');
           console.log(response);
           if (response && response.success) {
-              TransactionsPage.clear();
-              App.update();
+              TransactionsPage.clear();   
           } else {
             throw new Error(`Ошибка при удалении счета`);
           }
+          App.update();
         });
       }
     }

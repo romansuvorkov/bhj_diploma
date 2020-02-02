@@ -48,7 +48,7 @@ class Entity {
    * Получает информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static get( id = '', data, callback = f => f ) {  
+  static get( id, data, callback = f => f ) {  
 
     Object.assign(data, {id: id });
 
@@ -68,12 +68,12 @@ class Entity {
    * Удаляет информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static remove( id = '', data, callback = f => f ) {
+  static remove( id, data, callback = f => f ) {
     console.log(id);
     console.log(data);
-    data = Object.assign(data, {id: id });
+    data = {[id]: data };
     // Object.assign(data, {id: id });
-    // console.log(data);
+    console.log(data);
     data = Object.assign(data, {_method: 'DELETE'});
 
     let options = {
