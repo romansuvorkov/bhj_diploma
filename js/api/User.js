@@ -87,13 +87,13 @@ class User {
    * User.setCurrent.
    * */
   static register( data, callback = f => f ) {
-
     let options = {
       data,
       method: 'POST',
       url: this.HOST + this.URL + '/register',
       responseType: "json",
       callback: (err, response) => {
+        // console.log(response);
         if (response.success) {
           this.setCurrent(response.user);
         } 

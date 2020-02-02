@@ -18,7 +18,7 @@ class Entity {
       method: 'GET',
       callback
     }
-    console.log(options.HOST)
+    // console.log(options)
     return createRequest(options);
   }
 
@@ -28,7 +28,8 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create( data, callback = f => f ) {
-
+    // console.log(`Сработал create в Entity`);
+    // console.log(data);
     Object.assign(data, {_method: 'PUT'});
 
     let options = {
@@ -68,9 +69,13 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove( id = '', data, callback = f => f ) {
+    console.log(id);
+    console.log(data);
+    data = Object.assign(data, {id: id });
+    // Object.assign(data, {id: id });
+    // console.log(data);
+    data = Object.assign(data, {_method: 'DELETE'});
 
-    Object.assign(data, {id: id });
-    Object.assign(data, {_method: 'DELETE'});
     let options = {
       data,
       url: this.HOST + this.URL,
@@ -78,7 +83,7 @@ class Entity {
       method: 'POST',
       callback
     };
-
+    console.log(options);
     return createRequest(options);
 
   }

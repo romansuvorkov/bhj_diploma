@@ -13,7 +13,14 @@ class AccountsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+    if (element) {
+      this.element = element;
+      this.registerEvents();
+      this.update();
+    } else {
+      throw new Error (`Передан пустой элемент`);
+    }
+    
   }
 
   /**
@@ -24,6 +31,16 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
+    // console.log(`Сработал registerEvents в AccountsWidgets`);
+    this.element.addEventListener('click', (e) => {
+      if (e.target.classList.contains('create-account')) {
+        App.getModal('createAccount').open();
+      }
+
+      if (e.target.closest('.account')) {
+        this.onSelectAccount(e.target.closest('.account'));
+      }
+    });
 
   }
 
@@ -38,7 +55,20 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-
+    // console.log(User.current());
+    if (User.current()) {
+      Account.list(User.current(), (err, response) => {
+        // console.log(response);
+        if (response) {
+          this.clear();
+          for (let i = 0; i < response.data.length; i++) {
+            this.renderItem(response.data[i]);
+          } 
+        } else {
+          console.log('Ошибка обновления счетов');
+        }
+      });
+    }
   }
 
   /**
@@ -47,6 +77,10 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
+    let accounts = document.querySelectorAll('.account');
+    for (let item of accounts) {
+      item.remove();
+    }
 
   }
 
@@ -59,6 +93,17 @@ class AccountsWidget {
    * */
   onSelectAccount( element ) {
 
+  let account = document.querySelector('.active');
+  // console.log(account);
+  if (account) {
+    account.classList.remove('active');
+  }
+  this.currentAccountId = null;
+
+  element.classList.add('active');
+  this.currentAccountId = element.dataset.id;
+  App.showPage('transactions', { account_id: this.currentAccountId });
+
   }
 
   /**
@@ -68,6 +113,14 @@ class AccountsWidget {
    * */
   getAccountHTML( item ) {
 
+    let output = `<li class="account" data-id="${item.id}">
+                    <a href="#">
+                        <span>${item.name}</span> /
+                        <span>${item.sum}</span>
+                    </a>
+                  </li>`
+
+return output;
   }
 
   /**
@@ -78,5 +131,14 @@ class AccountsWidget {
    * */
   renderItem( item ) {
 
+    let accountInfo = this.getAccountHTML(item);
+    this.element.insertAdjacentHTML('beforeEnd', accountInfo);
+
   }
 }
+
+
+
+
+
+
